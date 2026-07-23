@@ -50,6 +50,20 @@ async fn main() -> Result<(), tossinvest_rs::v1::SdkError> {
 
 > 위 예제는 [`examples/quickstart.rs`](examples/quickstart.rs)와 동일하며, CI에서 `cargo build --examples`로 항상 컴파일됨을 보장합니다.
 
+### Prelude
+
+자주 쓰는 타입을 한 번에 가져오려면 `prelude`를 사용하세요.
+
+```rust
+use tossinvest_rs::prelude::*;       // HttpClient, MarketDataPort, ..., SdkError
+use tossinvest_rs::domain::models::Currency;
+
+let client = HttpClient::new("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")?;
+let _ = client.get_prices(&["005930"]).await?;
+```
+
+> 서버 사이드 전용입니다. OAuth2 Client Credentials(`client_secret`)를 브라우저/wasm에 노출할 수 없어 wasm 타겟은 지원하지 않습니다 — [CONTRIBUTING.md](CONTRIBUTING.md) 참고.
+
 ## 인증 (OAuth2 Client Credentials)
 
 토스증권 Open API는 OAuth2 Client Credentials 그랜트를 사용합니다. `HttpClient::new(client_id, client_secret)`는 토큰을 자동 발급·캐싱하며, 만료(여유분 60초 전) 시점에 자동 갱신합니다.

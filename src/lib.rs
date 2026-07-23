@@ -13,6 +13,18 @@ pub mod domain;
 pub mod error;
 pub mod port;
 
+/// 편의 재노출 프렐류드.
+///
+/// `use tossinvest_rs::prelude::*;` 로 클라이언트·포트 trait·에러 타입을 한 번에 가져옵니다.
+/// 도메인 모델은 [`crate::domain::models`] (`tossinvest_rs::domain::models`) 경로로 접근하세요.
+pub mod prelude {
+    pub use crate::adapter::http_client::HttpClient;
+    pub use crate::error::SdkError;
+    pub use crate::port::{
+        AccountPort, AuthPort, ConditionalOrderPort, MarketDataPort, TradingPort,
+    };
+}
+
 pub mod v1 {
     pub use crate::adapter;
     pub use crate::domain;
