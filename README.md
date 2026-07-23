@@ -1,5 +1,14 @@
 # Toss Securities (토스증권) Rust SDK (Unofficial)
 
+**[한국어](README.md)** | [English](README.en.md)
+
+<p align="center">
+  <a href="https://github.com/epicsagas/tossinvest-rs/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/epicsagas/tossinvest-rs/ci.yml?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=githubactions&logoColor=white" /></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-3fb950?style=for-the-badge&labelColor=0d1117" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-rs/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/epicsagas/tossinvest-rs?style=for-the-badge&labelColor=0d1117&color=ffd700&logo=github&logoColor=white" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-rs/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/epicsagas/tossinvest-rs?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=git&logoColor=white" /></a>
+</p>
+
 > ⚠️ **중요 공지 (Disclaimer)**
 > 본 라이브러리는 개인이 개발한 **비공식(Unofficial)** Rust SDK입니다.
 > [토스증권](https://tossinvest.com)의 공식 지원이나 관리를 받지 않는 독립적인 오픈소스 프로젝트입니다.
