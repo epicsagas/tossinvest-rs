@@ -3,40 +3,18 @@
 //! portone-rs 의 테스트 패턴을 따르되, 토스증권 특유의 OAuth2 토큰 자동 발급과
 //! `Authorization: Bearer` / `AccountSeq` 헤더 주입을 함께 검증합니다.
 
+mod common;
+use common::{account_client, client, mock_token};
+
 use serde_json::json;
 use tossinvest_rs::v1::domain::models::{
     CandleInterval, ConditionRequest, ConditionalOrderCreateRequest, ConditionalOrderType,
     Currency, MarketCountry, OrderCreateRequest, OrderListStatus, OrderModifyRequest, OrderSide,
     OrderType, RankingDuration, RankingType, TimeInForce,
 };
-use tossinvest_rs::v1::{HttpClient, MarketDataPort, SdkError, TradingPort};
+use tossinvest_rs::v1::{MarketDataPort, SdkError, TradingPort};
 use wiremock::matchers::{body_string_contains, header, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
-
-const ACCOUNT_SEQ: i64 = 123456;
-
-fn client(base_url: String) -> HttpClient {
-    HttpClient::new("test-id", "test-secret")
-        .expect("Failed to initialize HttpClient")
-        .with_base_url(base_url)
-}
-
-fn account_client(base_url: String) -> HttpClient {
-    client(base_url).with_account(ACCOUNT_SEQ)
-}
-
-/// `/oauth2/token` 발급을 mock. 모든 API 호출 전 자동으로 한 번 호출됩니다(캐싱).
-async fn mount_token(server: &MockServer) {
-    Mock::given(method("POST"))
-        .and(path("/oauth2/token"))
-        .respond_with(ResponseTemplate::new(200).set_body_json(json!({
-            "access_token": "test-token",
-            "token_type": "Bearer",
-            "expires_in": 86400
-        })))
-        .mount(server)
-        .await;
-}
 
 // ---------- 인증 ----------
 
@@ -65,7 +43,7 @@ async fn issue_token_calls_oauth2_endpoint() {
 #[tokio::test]
 async fn requests_carry_bearer_token() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/orderbook"))
         .and(header("authorization", "Bearer test-token"))
@@ -112,7 +90,7 @@ async fn oauth2_error_maps_to_api_error() {
 #[tokio::test]
 async fn get_prices_unwraps_result_array() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/prices"))
         .and(query_param("symbols", "005930,005935"))
@@ -139,7 +117,7 @@ async fn get_prices_unwraps_result_array() {
 #[tokio::test]
 async fn get_candles_builds_query_params() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/candles"))
         .and(query_param("symbol", "005930"))
@@ -173,7 +151,7 @@ async fn get_candles_builds_query_params() {
 #[tokio::test]
 async fn get_stock_warnings_uses_path_param() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/stocks/005930/warnings"))
         .respond_with(
@@ -195,7 +173,7 @@ async fn get_stock_warnings_uses_path_param() {
 #[tokio::test]
 async fn get_rankings_builds_enum_query() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/rankings"))
         .and(query_param("type", "TOP_GAINERS"))
@@ -223,7 +201,7 @@ async fn get_rankings_builds_enum_query() {
 #[tokio::test]
 async fn market_data_404_maps_to_api_error() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/orderbook"))
         .respond_with(
@@ -256,7 +234,7 @@ async fn market_data_404_maps_to_api_error() {
 #[tokio::test]
 async fn get_accounts_requires_no_account_header() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/accounts"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({
@@ -274,7 +252,7 @@ async fn get_accounts_requires_no_account_header() {
 #[tokio::test]
 async fn get_holdings_sends_account_seq_header() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/holdings"))
         .and(header("AccountSeq", "123456"))
@@ -303,7 +281,7 @@ async fn get_holdings_sends_account_seq_header() {
 #[tokio::test]
 async fn account_endpoint_without_account_seq_errors() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
 
     use tossinvest_rs::v1::AccountPort;
     let result = client(server.uri()).get_holdings(None).await;
@@ -318,7 +296,7 @@ async fn account_endpoint_without_account_seq_errors() {
 #[tokio::test]
 async fn create_order_serializes_amount_based_body() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("POST"))
         .and(path("/api/v1/orders"))
         .and(header("AccountSeq", "123456"))
@@ -343,7 +321,7 @@ async fn create_order_serializes_amount_based_body() {
 #[tokio::test]
 async fn create_order_serializes_quantity_based_with_optional_fields() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("POST"))
         .and(path("/api/v1/orders"))
         .and(body_string_contains("\"quantity\":\"10\""))
@@ -371,7 +349,7 @@ async fn create_order_serializes_quantity_based_with_optional_fields() {
 #[tokio::test]
 async fn cancel_order_returns_response_without_body() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("POST"))
         .and(path("/api/v1/orders/ord-1/cancel"))
         .respond_with(
@@ -390,7 +368,7 @@ async fn cancel_order_returns_response_without_body() {
 #[tokio::test]
 async fn get_orders_builds_query() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("GET"))
         .and(path("/api/v1/orders"))
         .and(query_param("status", "OPEN"))
@@ -419,7 +397,7 @@ async fn get_orders_builds_query() {
 #[tokio::test]
 async fn modify_order_serializes_body() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("POST"))
         .and(path("/api/v1/orders/ord-1/modify"))
         .and(body_string_contains("\"orderType\":\"LIMIT\""))
@@ -445,7 +423,7 @@ async fn modify_order_serializes_body() {
 #[tokio::test]
 async fn create_conditional_order_serializes_first_second() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("POST"))
         .and(path("/api/v1/conditional-orders"))
         .and(body_string_contains("\"type\":\"OCO\""))
@@ -479,7 +457,7 @@ async fn create_conditional_order_serializes_first_second() {
 #[tokio::test]
 async fn cancel_conditional_order_accepts_204() {
     let server = MockServer::start().await;
-    mount_token(&server).await;
+    mock_token(&server).await;
     Mock::given(method("DELETE"))
         .and(path("/api/v1/conditional-orders/co-1"))
         .and(header("AccountSeq", "123456"))

@@ -131,4 +131,44 @@ mod tests {
         });
         assert_eq!(store.cached().as_deref(), Some("tok"));
     }
+
+    /// `expires_in` 이 갱신 여유분(60s) 미만이어도 `ttl.max(1)` 로 최소 1초는 캐시(0-duration·
+    /// 즉시 만료 방지). 만료 이후 `cached()` 가 `None` 이 되는 분기는 `Instant::now()` 의존이라
+    /// 결정론적 단위 테스트가 불가 — e2e에서는 토큰 재사용(`expect(1)`)으로 검증합니다.
+    #[test]
+    fn store_with_short_expiry_still_cached_briefly() {
+        let store = TokenStore::new(
+            reqwest::Client::new(),
+            "x".into(),
+            "id".into(),
+            "secret".into(),
+        );
+        store.store(&OAuth2TokenResponse {
+            access_token: "short".into(),
+            token_type: "Bearer".into(),
+            expires_in: 0,
+        });
+        assert_eq!(store.cached().as_deref(), Some("short"));
+    }
+
+    #[test]
+    fn store_overwrites_previous_token() {
+        let store = TokenStore::new(
+            reqwest::Client::new(),
+            "x".into(),
+            "id".into(),
+            "secret".into(),
+        );
+        store.store(&OAuth2TokenResponse {
+            access_token: "first".into(),
+            token_type: "Bearer".into(),
+            expires_in: 3600,
+        });
+        store.store(&OAuth2TokenResponse {
+            access_token: "second".into(),
+            token_type: "Bearer".into(),
+            expires_in: 3600,
+        });
+        assert_eq!(store.cached().as_deref(), Some("second"));
+    }
 }
