@@ -199,8 +199,24 @@ src/
 ```bash
 cargo fmt                                       # 포맷
 cargo clippy --all-targets -- -D warnings       # 린트
-cargo test                                      # 전체 회귀 테스트
+cargo test                                      # 전체 회귀 테스트 (31개)
 ```
+
+### 성능
+
+SDK 핫패스 로컬 벤치마크 (criterion):
+
+| 벤치 | 중앙값 |
+|------|-------:|
+| 주문 요청 직렬화 | 128 ns |
+| 현재가 응답 역직렬화 (50개) | 8.50 µs |
+| 현재가 응답 역직렬화 (200개) | 33.47 µs |
+
+측정 환경·신뢰구간·해석은 [docs/benchmarks.md](docs/benchmarks.md)를 참고하세요.
+
+### 평가 게이트
+
+`epic eval` 게이트로 correctness·performance·quality·regression·e2e 5축을 추적합니다 — 현재 **OVERALL PASS (1.0)**. 최신 스냅샷은 [docs/eval-report.md](docs/eval-report.md)에서 확인하세요.
 
 ## 라이선스
 

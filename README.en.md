@@ -128,7 +128,21 @@ cargo clippy --all-targets -- -D warnings   # lint
 cargo test                      # full suite (31 tests)
 ```
 
-See [docs/eval-report.md](docs/eval-report.md) for the eval gate snapshot and [docs/benchmarks.md](docs/benchmarks.md) for benchmark numbers.
+### Performance
+
+Local benchmarks of the SDK hot paths (criterion):
+
+| Benchmark | Median |
+|-----------|-------:|
+| Order request serialization | 128 ns |
+| Prices response deserialization (50 items) | 8.50 µs |
+| Prices response deserialization (200 items) | 33.47 µs |
+
+See [docs/benchmarks.md](docs/benchmarks.md) for setup, confidence intervals, and interpretation.
+
+### Eval Gate
+
+The `epic eval` gate tracks correctness · performance · quality · regression · e2e — currently **OVERALL PASS (1.0)**. Latest snapshot: [docs/eval-report.md](docs/eval-report.md).
 
 ## License
 
