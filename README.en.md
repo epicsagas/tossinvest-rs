@@ -12,8 +12,8 @@
 > ⚠️ **Disclaimer**
 > This is an **Unofficial** Rust SDK, independently developed without affiliation to or endorsement by Toss Securities. See the official [Toss Securities Open API docs](https://developers.tossinvest.com/).
 
-> 🧪 **Not yet flight-tested (Pre-production)**
-> This SDK is verified with mock (wiremock) unit & E2E tests, but **real Toss Securities API integration (flight testing) has not been performed yet.** Run thorough integration tests with real credentials before production use — expect potential rough edges from spec/response-format differences.
+> 🧪 **Production Use Caution**
+> This SDK has not yet undergone integration testing against the real Toss Securities production environment (live API / pilot testing). All regression and E2E tests were performed using wiremock-based mocking, so please validate thoroughly against the live environment before adopting it in production.
 
 > API spec: Toss Securities Open API v1.2.4 (OpenAPI 3.1.0)
 
