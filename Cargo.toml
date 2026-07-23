@@ -22,6 +22,11 @@ url = "2"
 [dev-dependencies]
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 wiremock = "0.6.5"
+criterion = { version = "0.5", default-features = false, features = ["cargo_bench_support"] }
+
+[[bench]]
+name = "eval_harness"
+harness = false
 
 [[test]]
 name = "endpoints"
