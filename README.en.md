@@ -12,6 +12,9 @@
 > ⚠️ **Disclaimer**
 > This is an **Unofficial** Rust SDK, independently developed without affiliation to or endorsement by Toss Securities. See the official [Toss Securities Open API docs](https://developers.tossinvest.com/).
 
+> 🧪 **Not yet flight-tested (Pre-production)**
+> This SDK is verified with mock (wiremock) unit & E2E tests, but **real Toss Securities API integration (flight testing) has not been performed yet.** Run thorough integration tests with real credentials before production use — expect potential rough edges from spec/response-format differences.
+
 > API spec: Toss Securities Open API v1.2.4 (OpenAPI 3.1.0)
 
 An unofficial Rust SDK for the Toss Securities Open API. Built with a **hexagonal architecture (ports & adapters)** that cleanly separates domain logic from the HTTP transport layer. Covers 29 endpoints — market data, accounts/holdings, orders, and conditional orders — with a single, consistent API.
