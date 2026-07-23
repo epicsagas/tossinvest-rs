@@ -5,7 +5,8 @@
 //!
 //! Run: cargo bench --bench eval_harness
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput};
+use criterion::{criterion_group, criterion_main, Criterion, Throughput};
+use std::hint::black_box;
 use tossinvest_rs::v1::domain::models::{
     ApiResponse, OrderCreateRequest, OrderSide, OrderType, PriceResponse,
 };
