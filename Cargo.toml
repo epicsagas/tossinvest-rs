@@ -11,6 +11,10 @@ keywords = ["toss", "tossinvest", "securities", "stock", "sdk"]
 categories = ["api-bindings", "web-programming::http-client"]
 rust-version = "1.75"
 
+# Announce this library crate to cargo-dist (library-release mode is experimental).
+[package.metadata.dist]
+dist = true
+
 [dependencies]
 async-trait = "0.1"
 # NOTE: pinned to 0.12 — reqwest 0.13 removed the `rustls-tls` feature (breaking).
@@ -33,3 +37,8 @@ harness = false
 [[test]]
 name = "endpoints"
 path = "tests/endpoints.rs"
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
