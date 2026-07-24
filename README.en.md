@@ -10,14 +10,17 @@
 </p>
 
 > ⚠️ **Disclaimer**
-> This is an **Unofficial** Rust SDK, independently developed without affiliation to or endorsement by Toss Securities. See the official [Toss Securities Open API docs](https://developers.tossinvest.com/).
+> This library is an **Unofficial** Rust SDK, independently developed without affiliation to or endorsement by Toss Invest. The trademarks "Toss Invest" and "Toss" belong to Viva Republica / Toss Invest. See the official [Toss Invest Open API docs](https://developers.tossinvest.com/).
 
 > 🧪 **Production Use Caution**
-> This SDK has not yet undergone integration testing against the real Toss Securities production environment (live API / pilot testing). All regression and E2E tests were performed using wiremock-based mocking, so please validate thoroughly against the live environment before adopting it in production.
+> This SDK has not undergone integration testing against the real Toss Invest production environment (live API). All tests run on wiremock-based mocks, so please validate thoroughly against the live environment before adopting it in production with real funds. **The developer assumes no liability for any losses arising from the use of this library.**
 
-> API spec: Toss Securities Open API v1.2.4 (OpenAPI 3.1.0)
+> 🚫 **Liability**
+> The original author and the company in question (Toss Invest) assume no responsibility for any financial or material losses incurred while using this library.
 
-An unofficial Rust SDK for the Toss Securities Open API. Built with a **hexagonal architecture (ports & adapters)** that cleanly separates domain logic from the HTTP transport layer. Covers 29 endpoints — market data, accounts/holdings, orders, and conditional orders — with a single, consistent API.
+> API spec: Toss Invest Open API v1.2.4 (OpenAPI 3.1.0)
+
+An unofficial Rust SDK for the Toss Invest Open API. Built with a **hexagonal architecture (ports & adapters)** that cleanly separates domain logic from the HTTP transport layer. Covers 29 endpoints — market data, accounts/holdings, orders, and conditional orders — with a single, consistent API.
 
 ## Features
 

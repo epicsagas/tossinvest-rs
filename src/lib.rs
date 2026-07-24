@@ -1,8 +1,8 @@
-//! # Toss Securities (토스증권) Rust SDK (Unofficial)
+//! # Toss Invest (토스증권) Rust SDK (Unofficial)
 //!
 //! ⚠️ **비공식 (Unofficial) Rust SDK**
 //! 본 라이브러리는 개인이 개발한 비공식 Rust SDK입니다.
-//! 토스증권(Toss Securities)의 공식 지원이나 관리를 받지 않는 독립적인 오픈소스 프로젝트입니다.
+//! 토스증권(Toss Invest)의 공식 지원이나 관리를 받지 않는 독립적인 오픈소스 프로젝트입니다.
 //! 공식 정보 및 문서는 [토스증권 Open API 문서](https://openapi.tossinvest.com/)를 참고하세요.
 
 // 응답 모델 필드는 JSON 키와 1:1로 일치(camelCase)시켜 역직렬화를 직관적으로 유지합니다.
