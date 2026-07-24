@@ -1,4 +1,4 @@
-# Toss Invest (토스증권) Rust SDK (Unofficial)
+# 토스증권 Rust SDK (Unofficial)
 
 **[한국어](README.md)** | [English](README.en.md)
 
