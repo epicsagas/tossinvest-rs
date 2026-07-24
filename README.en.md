@@ -1,4 +1,4 @@
-# Toss Securities Rust SDK (Unofficial)
+# Toss Invest Rust SDK (Unofficial)
 
 **[English](README.en.md)** | [한국어](README.md)
 
