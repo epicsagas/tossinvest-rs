@@ -7,12 +7,12 @@ mod common;
 use common::{account_client, client, mock_token};
 
 use serde_json::json;
-use tossinvest_rs::v1::domain::models::{
+use tossinvest_sdk::v1::domain::models::{
     CandleInterval, ConditionRequest, ConditionalOrderCreateRequest, ConditionalOrderType,
     Currency, MarketCountry, OrderCreateRequest, OrderListStatus, OrderModifyRequest, OrderSide,
     OrderType, RankingDuration, RankingType, TimeInForce,
 };
-use tossinvest_rs::v1::{MarketDataPort, SdkError, TradingPort};
+use tossinvest_sdk::v1::{MarketDataPort, SdkError, TradingPort};
 use wiremock::matchers::{body_string_contains, header, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
@@ -34,7 +34,7 @@ async fn issue_token_calls_oauth2_endpoint() {
         .mount(&server)
         .await;
 
-    use tossinvest_rs::v1::AuthPort;
+    use tossinvest_sdk::v1::AuthPort;
     let token = client(server.uri()).issue_token().await.unwrap();
     assert_eq!(token.access_token, "abc");
     assert_eq!(token.expires_in, 3600);
@@ -243,7 +243,7 @@ async fn get_accounts_requires_no_account_header() {
         .mount(&server)
         .await;
 
-    use tossinvest_rs::v1::AccountPort;
+    use tossinvest_sdk::v1::AccountPort;
     let accounts = client(server.uri()).get_accounts().await.unwrap();
     assert_eq!(accounts.len(), 1);
     assert_eq!(accounts[0].accountSeq, 123456);
@@ -270,7 +270,7 @@ async fn get_holdings_sends_account_seq_header() {
         .mount(&server)
         .await;
 
-    use tossinvest_rs::v1::AccountPort;
+    use tossinvest_sdk::v1::AccountPort;
     let holdings = account_client(server.uri())
         .get_holdings(None)
         .await
@@ -283,7 +283,7 @@ async fn account_endpoint_without_account_seq_errors() {
     let server = MockServer::start().await;
     mock_token(&server).await;
 
-    use tossinvest_rs::v1::AccountPort;
+    use tossinvest_sdk::v1::AccountPort;
     let result = client(server.uri()).get_holdings(None).await;
     assert!(
         matches!(result, Err(SdkError::Unknown(_))),
@@ -446,7 +446,7 @@ async fn create_conditional_order_serializes_first_second() {
     )
     .second(ConditionRequest::new(OrderSide::Buy, "65000", "65100"));
 
-    use tossinvest_rs::v1::ConditionalOrderPort;
+    use tossinvest_sdk::v1::ConditionalOrderPort;
     let resp = account_client(server.uri())
         .create_conditional_order(req)
         .await
@@ -465,7 +465,7 @@ async fn cancel_conditional_order_accepts_204() {
         .mount(&server)
         .await;
 
-    use tossinvest_rs::v1::ConditionalOrderPort;
+    use tossinvest_sdk::v1::ConditionalOrderPort;
     account_client(server.uri())
         .cancel_conditional_order("co-1")
         .await

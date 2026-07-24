@@ -3,10 +3,10 @@
 **[English](README.en.md)** | [한국어](README.md)
 
 <p align="center">
-  <a href="https://github.com/epicsagas/tossinvest-rs/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/epicsagas/tossinvest-rs/ci.yml?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=githubactions&logoColor=white" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-sdk/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/epicsagas/tossinvest-sdk/ci.yml?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=githubactions&logoColor=white" /></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-3fb950?style=for-the-badge&labelColor=0d1117" /></a>
-  <a href="https://github.com/epicsagas/tossinvest-rs/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/epicsagas/tossinvest-rs?style=for-the-badge&labelColor=0d1117&color=ffd700&logo=github&logoColor=white" /></a>
-  <a href="https://github.com/epicsagas/tossinvest-rs/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/epicsagas/tossinvest-rs?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=git&logoColor=white" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-sdk/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/epicsagas/tossinvest-sdk?style=for-the-badge&labelColor=0d1117&color=ffd700&logo=github&logoColor=white" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-sdk/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/epicsagas/tossinvest-sdk?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=git&logoColor=white" /></a>
 </p>
 
 > ⚠️ **Disclaimer**
@@ -36,13 +36,13 @@ Add to `Cargo.toml`:
 
 ```toml
 [dependencies]
-tossinvest-rs = "0.1.0"
+tossinvest-sdk = "0.1.0"
 ```
 
 ## Quick Start
 
 ```rust
-use tossinvest_rs::prelude::*; // HttpClient, port traits, SdkError
+use tossinvest_sdk::prelude::*; // HttpClient, port traits, SdkError
 
 #[tokio::main]
 async fn main() -> Result<(), SdkError> {
@@ -72,8 +72,8 @@ let client = HttpClient::new("CLIENT_ID", "CLIENT_SECRET")?
 Holdings · orders · conditional orders · buying power · sellable quantity · commissions require an `AccountSeq` header. Get it from `GET /accounts`, then set it:
 
 ```rust
-use tossinvest_rs::prelude::*;
-use tossinvest_rs::domain::models::Currency;
+use tossinvest_sdk::prelude::*;
+use tossinvest_sdk::domain::models::Currency;
 
 let trader = HttpClient::new("CLIENT_ID", "CLIENT_SECRET")?.with_account(123456);
 let power = trader.get_buying_power(Currency::Krw).await?;
@@ -81,7 +81,7 @@ let power = trader.get_buying_power(Currency::Krw).await?;
 
 ## Domain Ports
 
-`HttpClient` implements 5 port traits, importable from `tossinvest_rs::prelude`:
+`HttpClient` implements 5 port traits, importable from `tossinvest_sdk::prelude`:
 
 | Port | Covers |
 | --- | --- |

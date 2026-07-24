@@ -8,7 +8,7 @@
 #![allow(dead_code)]
 
 use serde_json::{json, Value};
-use tossinvest_rs::v1::HttpClient;
+use tossinvest_sdk::v1::HttpClient;
 use wiremock::matchers::{method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 

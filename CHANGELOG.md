@@ -22,5 +22,5 @@
 - 토스증권 Open API v1.2.4 (OpenAPI 3.1.0) 기반
 - 비공식(Unofficial) SDK — 토스증권 공식 지원 아님
 
-[Unreleased]: https://github.com/epicsagas/tossinvest-rs/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/epicsagas/tossinvest-rs/releases/tag/v0.1.0
+[Unreleased]: https://github.com/epicsagas/tossinvest-sdk/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/epicsagas/tossinvest-sdk/releases/tag/v0.1.0

@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        tossinvest-rs 사용 중 발생한 버그를 알려주세요. 보안 취약점은 [SECURITY.md](../SECURITY.md)의 비공개 채널을 이용해 주세요.
+        tossinvest-sdk 사용 중 발생한 버그를 알려주세요. 보안 취약점은 [SECURITY.md](../SECURITY.md)의 비공개 채널을 이용해 주세요.
   - type: textarea
     id: what-happened
     attributes:
@@ -16,7 +16,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: tossinvest-rs 버전
+      label: tossinvest-sdk 버전
       placeholder: "0.1.0"
     validations:
       required: true

@@ -6,12 +6,14 @@
 mod common;
 use common::{account_client, client, fixtures, mock_token, mock_token_once, ACCOUNT_SEQ};
 
-use tossinvest_rs::v1::domain::models::{
+use tossinvest_sdk::v1::domain::models::{
     CandleInterval, ConditionRequest, ConditionalOrderCreateRequest, ConditionalOrderModifyRequest,
     ConditionalOrderType, MarketCountry, OrderCreateRequest, OrderListStatus, OrderSide, OrderType,
     RankingDuration, RankingType,
 };
-use tossinvest_rs::v1::{AccountPort, ConditionalOrderPort, MarketDataPort, SdkError, TradingPort};
+use tossinvest_sdk::v1::{
+    AccountPort, ConditionalOrderPort, MarketDataPort, SdkError, TradingPort,
+};
 use wiremock::matchers::{method, path, query_param, query_param_is_missing};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
@@ -254,7 +256,7 @@ async fn market_data_batch_session() {
     assert_eq!(stocks.len(), 2);
     assert_eq!(
         stocks[0].currency,
-        tossinvest_rs::v1::domain::models::Currency::Krw
+        tossinvest_sdk::v1::domain::models::Currency::Krw
     );
 
     let candles = client

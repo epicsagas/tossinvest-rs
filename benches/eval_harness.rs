@@ -1,4 +1,4 @@
-//! eval_harness.rs — criterion benchmark suite for tossinvest-rs
+//! eval_harness.rs — criterion benchmark suite for tossinvest-sdk
 //!
 //! Measures the SDK's hot paths: request body serialization and response
 //! envelope deserialization. These dominate per-call CPU outside of network I/O.
@@ -7,7 +7,7 @@
 
 use criterion::{criterion_group, criterion_main, Criterion, Throughput};
 use std::hint::black_box;
-use tossinvest_rs::v1::domain::models::{
+use tossinvest_sdk::v1::domain::models::{
     ApiResponse, OrderCreateRequest, OrderSide, OrderType, PriceResponse,
 };
 

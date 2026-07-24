@@ -22,7 +22,7 @@
 
 ## 집행
 
-위반 행동은 [이슈](https://github.com/epicsagas/tossinvest-rs/issues) 또는 비공개 채널로 신고할 수 있습니다.
+위반 행동은 [이슈](https://github.com/epicsagas/tossinvest-sdk/issues) 또는 비공개 채널로 신고할 수 있습니다.
 운영진은 신고를 검토하고, 필요한 경우 경고·기여 정지·추방 등 적절한 조치를 취합니다.
 
 본 강령은 [Contributor Covenant 2.1](https://www.contributor-covenant.org/ko/version/2/1/code_of_conduct/)에서 발췌·요약했습니다.

@@ -1,4 +1,4 @@
-# Eval Report — tossinvest-rs
+# Eval Report — tossinvest-sdk
 
 > 평가 시각: 2026-07-24T00:59:32 (KST) · Branch `main` · Commit `dcf659d`
 > 게이트: `epic eval` (5 dimension + 2 benchmark) · Baseline 갱신 완료

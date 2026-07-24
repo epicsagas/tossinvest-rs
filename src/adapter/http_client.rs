@@ -16,8 +16,8 @@ const DEFAULT_BASE_URL: &str = "https://openapi.tossinvest.com";
 /// 토스증권 Open API 클라이언트. 모든 포트 trait (`MarketDataPort` 등) 을 구현합니다.
 ///
 /// ```no_run
-/// use tossinvest_rs::v1::{HttpClient, MarketDataPort};
-/// # async fn run() -> Result<(), tossinvest_rs::v1::SdkError> {
+/// use tossinvest_sdk::v1::{HttpClient, MarketDataPort};
+/// # async fn run() -> Result<(), tossinvest_sdk::v1::SdkError> {
 /// let client = HttpClient::new("CLIENT_ID", "CLIENT_SECRET")?;
 /// let price = client.get_prices(&["005930"]).await?;
 /// # Ok(()) }

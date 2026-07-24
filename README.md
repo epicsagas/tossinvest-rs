@@ -3,10 +3,10 @@
 **[한국어](README.md)** | [English](README.en.md)
 
 <p align="center">
-  <a href="https://github.com/epicsagas/tossinvest-rs/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/epicsagas/tossinvest-rs/ci.yml?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=githubactions&logoColor=white" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-sdk/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/epicsagas/tossinvest-sdk/ci.yml?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=githubactions&logoColor=white" /></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-3fb950?style=for-the-badge&labelColor=0d1117" /></a>
-  <a href="https://github.com/epicsagas/tossinvest-rs/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/epicsagas/tossinvest-rs?style=for-the-badge&labelColor=0d1117&color=ffd700&logo=github&logoColor=white" /></a>
-  <a href="https://github.com/epicsagas/tossinvest-rs/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/epicsagas/tossinvest-rs?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=git&logoColor=white" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-sdk/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/epicsagas/tossinvest-sdk?style=for-the-badge&labelColor=0d1117&color=ffd700&logo=github&logoColor=white" /></a>
+  <a href="https://github.com/epicsagas/tossinvest-sdk/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/epicsagas/tossinvest-sdk?style=for-the-badge&labelColor=0d1117&color=58a6ff&logo=git&logoColor=white" /></a>
 </p>
 
 > ⚠️ **중요 공지 (Disclaimer)**
@@ -40,7 +40,7 @@
 
 ```toml
 [dependencies]
-tossinvest-rs = "0.1.0"
+tossinvest-sdk = "0.1.0"
 ```
 
 ## 빠른 시작
@@ -48,10 +48,10 @@ tossinvest-rs = "0.1.0"
 발급받은 클라이언트 자격증명(`client_id`, `client_secret`)으로 `HttpClient`를 초기화하면 모든 포트 trait 메서드를 사용할 수 있습니다.
 
 ```rust
-use tossinvest_rs::v1::{HttpClient, MarketDataPort};
+use tossinvest_sdk::v1::{HttpClient, MarketDataPort};
 
 #[tokio::main]
-async fn main() -> Result<(), tossinvest_rs::v1::SdkError> {
+async fn main() -> Result<(), tossinvest_sdk::v1::SdkError> {
     // OAuth2 액세스 토큰이 자동으로 발급되어 Authorization 헤더에 주입됩니다.
     let client = HttpClient::new("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")?;
 
@@ -70,8 +70,8 @@ async fn main() -> Result<(), tossinvest_rs::v1::SdkError> {
 자주 쓰는 타입을 한 번에 가져오려면 `prelude`를 사용하세요.
 
 ```rust
-use tossinvest_rs::prelude::*;       // HttpClient, MarketDataPort, ..., SdkError
-use tossinvest_rs::domain::models::Currency;
+use tossinvest_sdk::prelude::*;       // HttpClient, MarketDataPort, ..., SdkError
+use tossinvest_sdk::domain::models::Currency;
 
 let client = HttpClient::new("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")?;
 let _ = client.get_prices(&["005930"]).await?;
@@ -93,7 +93,7 @@ let client = HttpClient::new("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")?
 토큰을 명시적으로 발급받거나 만료 정보를 확인하려면 `AuthPort`를 사용합니다 (일반적으로는 불필요).
 
 ```rust
-use tossinvest_rs::v1::AuthPort;
+use tossinvest_sdk::v1::AuthPort;
 let token = client.issue_token().await?;
 println!("만료까지 {}초", token.expires_in);
 ```
@@ -103,7 +103,7 @@ println!("만료까지 {}초", token.expires_in);
 잔고·주문·조건부주문·매수가능금액·매도가능수량·수수료 엔드포인트는 `AccountSeq` 헤더가 필요합니다. `with_account(accountSeq)`로 기본 계좌를 지정하세요. `accountSeq`는 `GET /accounts` 응답에서 얻습니다.
 
 ```rust
-use tossinvest_rs::v1::{HttpClient, AccountPort, TradingPort};
+use tossinvest_sdk::v1::{HttpClient, AccountPort, TradingPort};
 
 let client = HttpClient::new("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")?;
 
@@ -121,7 +121,7 @@ let holdings = client.get_holdings(None).await?;
 
 ## 도메인 포트
 
-`HttpClient`는 5개의 포트 trait을 구현합니다. 각 trait은 `tossinvest_rs::v1::` 최상위에서 직접 임포트할 수 있습니다.
+`HttpClient`는 5개의 포트 trait을 구현합니다. 각 trait은 `tossinvest_sdk::v1::` 최상위에서 직접 임포트할 수 있습니다.
 
 | 포트 Trait | 주요 기능 |
 | --- | --- |
@@ -132,7 +132,7 @@ let holdings = client.get_holdings(None).await?;
 | `AuthPort` | OAuth2 토큰 수동 발급 |
 
 ```rust
-use tossinvest_rs::v1::{
+use tossinvest_sdk::v1::{
     HttpClient, MarketDataPort, TradingPort,
     domain::models::{Currency, OrderCreateRequest, OrderSide, OrderType},
 };
@@ -154,7 +154,7 @@ let power = client.get_buying_power(Currency::Krw).await?;
 모든 오류는 단일 `SdkError`로 표현됩니다.
 
 ```rust
-use tossinvest_rs::v1::SdkError;
+use tossinvest_sdk::v1::SdkError;
 
 match client.get_prices(&["000000"]).await {
     Ok(prices) => println!("{prices:?}"),
